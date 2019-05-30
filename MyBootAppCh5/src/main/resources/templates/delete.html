@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>top page</title>
+<style type="text/css">
+	h1 { font-size: 18pt; font-weight: bold; color: gray; }
+	body { font-size: 13pt; color: gray; margin: 5px 25px; }
+	pre { border: solid 3px #ddd; padding: 10px; }
+	tr { margin: 5px; }
+	th { padding: 5px; color: white; background: darkgray; }
+	td { padding: 5px; color: black; background: #e0e0ff; }
+</style>
+</head>
+<body>
+	<h1 th:text="${title}">Edit page</h1>
+	<form method="post" action="/delete" th:object="${formModel}">
+	<input type="hidden" name="id" th:value="*{id}" /> 
+	<table>
+		<tr>
+			<td><p th:text="|이름: *{name}|"></p></td>
+		</tr>
+		<tr>
+			<td><p th:text="|연령: *{age}|"></p></td>
+		</tr>
+		<tr>
+			<td><p th:text="|메일: *{mail}|"></p></td>
+		</tr>
+		<tr>
+			<td><p th:text="|메모: *{memo}|"></p></td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="삭제" /></td> 
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>top page</title>
+<style type="text/css">
+	h1 { font-size: 18pt; font-weight: bold; color: gray; }
+	body { font-size: 13pt; color: gray; margin: 5px 25px; }
+	pre { border: solid 3px #ddd; padding: 10px; }
+	tr { margin: 5px; }
+	th { padding: 5px; color: white; background: darkgray; }
+	td { padding: 5px; color: black; background: #e0e0ff; }
+	.err { color: red; }
+</style>
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	$(document).ready(function(e){
+		
+		// http://localhost:8080/?id=2
+		/* <![CDATA[ */
+		var num = /*[[${param.id[0]}]]*/;
+		/* ]]> */
+		$.get("/rest/" + num, null, callback);
+	});
+	
+	function callback(result) {
+		$('#obj').append('<li>id: ' + result.id + '</li>');
+		$('#obj').append('<li>name: ' + result.name + '</li>');
+		$('#obj').append('<li>mail: ' + result.mail + '</li>');
+		$('#obj').append('<li>age: ' + result.age + '</li>');
+		$('#obj').append('<li>memo: ' + result.memo + '</li>');
+	}
+</script>
+</head>
+<body>
+	<h1 th:text="${title}">Hello page</h1>
+	<p th:text="${msg}"></p>
+	<ol id="obj"></ol>
+	<table>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">이름</th>
+			<th scope="col">연령</th>
+			<th scope="col">메일</th>
+			<th scope="col">메모</th>
+		</tr>
+		<tr th:if="${#lists.size(datalist)} > 0" th:each="obj : ${datalist}">
+			<td th:text="${obj?.id}"></td>
+			<td th:text="${obj?.name}"></td>
+			<td th:text="${obj?.age}"></td>
+			<td th:text="${obj?.mail}"></td>
+			<td th:text="${obj?.memo}"></td>
+		</tr>
+		<tr th:unless="${#lists.size(datalist)} > 0">
+			<td colspan="5">등록된 Data가 없습니다.</td>
+		</tr>
+	</table>
+</body>
+</html>

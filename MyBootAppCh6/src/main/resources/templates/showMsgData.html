@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>top page</title>
+<style type="text/css">
+	h1 { font-size: 18pt; font-weight: bold; color: gray; }
+	body { font-size: 13pt; color: gray; margin: 5px 25px; }
+	pre { border: solid 3px #ddd; padding: 10px; }
+	tr { margin: 5px; }
+	th { padding: 5px; color: white; background: darkgray; }
+	td { padding: 5px; color: black; background: #e0e0ff; }
+	.err { color: red; }
+</style>
+</head>
+<body>
+	<h1 th:text="${title}">MyMsg page</h1>
+	<p th:text="${msg}"></p>
+	<form method="post" action="/msg" th:object="${formModel}">
+		<input type="hidden" name="id" th:value="*{id}" />
+		<table>
+			<tr>
+				<td><label for="title">이름</label></td>
+				<td><input type="text" name="title" th:value="*{title}" /></td>
+			</tr>
+			<tr>
+				<td><label for="message">메시지</label></td>
+				<td><textarea name="message" th:text="*{message}" rows="5" cols="20"></textarea>
+			</td>
+			<tr>
+				<td><label for="mydata">MYDATA_ID</label></td>
+				<td><input type="text" name="mydata"  /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="등록" /></td> 
+			</tr>
+		</table>
+	</form>
+	<hr/>
+	<table>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">이름</th>
+			<th scope="col">제목</th>
+		</tr>
+		<tr th:if="${#lists.size(datalist)} > 0" th:each="obj : ${datalist}">
+			<td th:text="${obj?.id}"></td>
+			<td th:text="${obj?.mydata.name}"></td>
+			<td th:text="${obj?.title}"></td>
+		</tr>
+		<tr th:unless="${#lists.size(datalist)} > 0">
+			<td colspan="3">등록된 Data가 없습니다.</td>
+		</tr>
+	</table>
+</body>
+</html>

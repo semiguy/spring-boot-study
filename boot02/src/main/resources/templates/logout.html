@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Sample1</title>
+<link rel="stylesheet" th:href="@{/bootstrap431/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="container-fluid">
+		<h2>CUSTOM LOGOUT PAGE</h2>
+		<form method="post">
+			<h3>Logout</h3>
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			<button type="submit" class="btn btn-danger">LogOut</button>
+		</form>
+	</div>
+<script type="text/javascript" th:src="@{/js/vendor/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/bootstrap431/js/bootstrap.min.js}"></script>
+</body>
+</html>

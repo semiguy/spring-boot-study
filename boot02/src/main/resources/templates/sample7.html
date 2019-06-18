@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Sample1</title>
+<link rel="stylesheet" th:href="@{/bootstrap431/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1 th:text="${now}"></h1>
+	<h1 th:text="${#dates.format(now, 'yyyy-MM-dd HH:mm:ss')}"></h1>
+	<div th:with="timeValue=${#dates.createToday()}">
+		<p>[[${timeValue}]]</p>
+	</div>
+	
+	<h1 th:text="${price}"></h1>
+	<h2 th:text="${#numbers.formatInteger(price, 3, 'COMMA')}"></h2>
+	<div th:with="priceValue=99.87654">
+		<p th:text="${#numbers.formatInteger(priceValue, 3, 'COMMA')}"></p>
+		<p th:text="${#numbers.formatDecimal(priceValue, 5, 10, 'COMMA')}"></p>
+	</div>
+	
+	<h1 th:text="${title}"></h1>
+	<span th:utext="${#strings.replace(title, 's', '<b>s</b>')}"></span>
+	<ul>
+		<li th:each="str : ${#strings.listSplit(title, ' ')}">[[${str}]]</li>
+	</ul>
+	
+	<h1 th:text="${options}"></h1>
+	
+	<ul>
+		<li><a th:href="@{http://localhost:8080/sample1}">sample1</a></li>
+		<li><a th:href="@{/sample1}">sample1</a></li>
+		<li><a th:href="@{~/sample1}">sample1</a></li>
+		<li><a th:href="@{/sample1(p1='aaa', p2='bbb')}">sample1</a></li>
+	</ul>
+
+<script type="text/javascript" th:src="@{/js/vendor/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/bootstrap431/js/bootstrap.min.js}"></script>
+</body>
+</html>

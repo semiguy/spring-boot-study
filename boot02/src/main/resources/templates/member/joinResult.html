@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>JoinResult</title>
+<link rel="stylesheet" th:href="@{/bootstrap431/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+	<form method="post"> 
+	<div class="card">
+		<div class="card-header">
+   			회원 가입
+ 		</div>
+ 		<div class="card-body">
+   			<p>
+				<label>UID</label> <input type="text" name="uid" th:value="${member.uid}" />
+			</p>
+			<p>
+				<label>UPW</label> <input type="text" name="upw" th:value="${member.upw}" readonly />
+			</p>
+			<p>
+				<label>UNAME</label> <input type="text" name="uname" th:value="${member.uname}" readonly />
+			</p>
+			<p>
+				[[${member.roles}]
+			</p>
+ 		</div>
+	</div>
+	</form>
+</div>
+
+<script type="text/javascript" th:src="@{/js/vendor/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/bootstrap431/js/bootstrap.min.js}"></script>
+</body>
+</html>

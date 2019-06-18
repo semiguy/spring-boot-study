@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Sample1</title>
+<link rel="stylesheet" th:href="@{/bootstrap431/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>/admin for admin</h1>
+	<hr/>
+	<h3 sec:authentication="name">Spring security username</h3>
+	<h3>[[${#authentication.name}]]</h3>
+	<hr/>
+	<p sec:authorize-url="/admin/aaa">
+		<a href="/admin/aaa">ADMIN AAA</a>
+	</p>
+	<p sec:authorize-url="/manager/aaa">
+		<a href="/manager/aaa">manager AAA</a>
+	</p>
+	<hr/>
+	<h1 sec:authorize="hasRole('ROLE_ADMIN')">
+		This content is only for administrators.
+	</h1>
+	<hr/>
+	<div>[[${#authentication.principal}]]</div>
+	<hr/>
+	<div>[[${#authentication.principal.member}]]</div>
+	<hr/>
+	<div>[[${#authentication.principal.member.uname}]]</div>
+	<hr/>
+	<div th:with="member=${#authentication.principal.member}">
+		<p>[[${member.uid}]]</p>
+		<p>[[${member.upw}]]</p>
+		<p>[[${member.uname}]]</p>
+	</div>
+<script type="text/javascript" th:src="@{/js/vendor/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/vendor/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/bootstrap431/js/bootstrap.min.js}"></script>
+</body>
+</html>

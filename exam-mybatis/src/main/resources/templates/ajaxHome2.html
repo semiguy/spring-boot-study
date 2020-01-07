@@ -1,0 +1,231 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<script src="/js/jquery-3.4.1.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		$("#listBtn").on("click", function(){
+			$.get("/users", function(data) {
+				console.log(data);
+				
+				alert(JSON.stringify(data));
+			});
+		});
+		
+		$("#readBtn").on("click", function(){
+			var userNo = $("#userNo");
+			var userNoVal = userNo.val();
+			
+			console.log(userNoVal);
+			
+			$.ajax({
+				type: "GET",
+				url: "/users/" + userNoVal,
+				contentType: "application/json; charset=UTF-8",
+				success: function(data) {
+					console.log("data: " + data);
+					alert(JSON.stringify(data));
+					
+					$("#userId").val(data.userId);
+					$("#userPw").val(data.userPw);
+					$("#userName").val(data.userName);
+					
+					if(data.authList[0]) {
+						$("#authList0\\.auth").val(data.authList[0].auth);
+					}
+					
+					if(data.authList[1]) {
+						$("#authList1\\.auth").val(data.authList[1].auth);
+					}
+					
+					if(data.authList[2]) {
+						$("#authList2\\.auth").val(data.authList[2].auth);
+					}
+				},
+				error: function(xhr, status, error) {
+					alert("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
+				}
+			});
+		});
+		
+		$("#registerBtn").on("click", function(){
+			var userId = $("#userId");
+			var userPw = $("#userPw");
+			var userName = $("#userName");
+			
+			var userIdVal = userId.val();
+			var userPwVal = userPw.val();
+			var userNameVal = userName.val();
+			
+			var userObject = {
+				userId: userIdVal,
+				userPw: userPwVal,
+				userName: userNameVal
+			};
+			
+			$.ajax({
+				type: "POST",
+				url: "/users",
+				data: JSON.stringify(userObject),
+				contentType: "application/json; charset=UTF-8",
+				success: function() {
+					alert("Created");
+				},
+				error: function(xhr, status, error) {
+					alert("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
+				}
+			});
+			
+		});
+		
+		$("#deleteBtn").on("click", function(){
+			var userNo = $("#userNo");
+			var userNoVal = userNo.val();
+			
+			console.log(userNoVal);
+			
+			$.ajax({
+				type: "DELETE",
+				url: "/users/" + userNoVal,
+				contentType: "application/json; charset=UTF-8",
+				success: function() {
+					alert("Deleted");
+				},
+				error: function(xhr, status, error) {
+					alert("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
+				}
+			})
+		});
+		
+		$("#modifyBtn").on("click", function(){
+			var userNo = $("#userNo");
+			var userId = $("#userId");
+			var userPw = $("#userPw");
+			var userName = $("#userName");
+			var auth1 = $("#authList0\\.auth");
+			var auth2 = $("#authList1\\.auth");
+			var auth3 = $("#authList2\\.auth");
+			
+			var userNoVal = userNo.val();
+			var userIdVal = userId.val();
+			var userPwVal = userPw.val();
+			var userNameVal = userName.val();
+			var authVal1 = auth1.val();
+			var authVal2 = auth2.val();
+			var authVal3 = auth3.val();
+			
+			console.log("authVal1=" + authVal1);
+			console.log("authVal2=" + authVal2);
+			console.log("authVal3=" + authVal3);
+			
+			var userObject = {
+				userId: userIdVal,
+				userPw: userPwVal,
+				userName: userNameVal,
+				authList:[
+					{
+						userNo: userNoVal,
+						auth: authVal1
+					},
+					{
+						userNo: userNoVal,
+						auth: authVal2
+					},
+					{
+						userNo: userNoVal,
+						auth: authVal3
+					}
+				]
+			};
+			
+			$.ajax({
+				type: "PUT",
+				url: "/users/" + userNoVal,
+				data: JSON.stringify(userObject),
+				contentType: "application/json; charset=UTF-8",
+				success: function() {
+					alert("Modified");
+				},
+				error: function(xhr, status, error) {
+					alert("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
+				}
+			});
+			
+		});
+		
+		$("#resetBtn").on("click", function(){
+			$("#userNo").val("");
+			$("#userId").val("");
+			$("#userPw").val("");
+			$("#userName").val("");
+			$("#authList0\\.auth").val("");
+			$("#authList1\\.auth").val("");
+			$("#authList2\\.auth").val("");
+		});
+		
+	});
+</script>
+<body>
+	<h1>ajax Home.</h1>
+	<table>
+		<tr>
+			<td><label for="userNo">userNo</label></td>
+			<td><input type="text" name="userNo" value="" id="userNo"></td>
+		</tr>
+		<tr>
+			<td><label for="userId">userId</label></td>
+			<td><input type="text" name="userId" value="" id="userId"></td>
+		</tr>
+		<tr>
+			<td><label for="userPw">userPw</label></td>
+			<td><input type="text" name="userPw" value="" id="userPw"></td>
+		</tr>
+		<tr>
+			<td><label for="userName">userName</label></td>
+			<td><input type="text" name="userName" value="" id="userName"></td>
+		</tr>
+		<tr>
+			<td>auth - 1</td>
+			<td>
+				<select id="authList0.auth" name="authList[0].auth">
+					<option value="" selected="selected">===선택해주세요===</option>
+					<option value="ROLE_USER">사용자</option>
+					<option value="ROLE_MEMBER">회원</option>
+					<option value="ROLE_ADMIN">관리자</option>
+				</select>
+		</tr>
+		<tr>
+			<td>auth - 2</td>
+			<td>
+				<select id="authList1.auth" name="authList[1].auth">
+					<option value="" selected="selected">===선택해주세요===</option>
+					<option value="ROLE_USER">사용자</option>
+					<option value="ROLE_MEMBER">회원</option>
+					<option value="ROLE_ADMIN">관리자</option>
+				</select>
+		</tr>
+		<tr>
+			<td>auth - 3</td>
+			<td>
+				<select id="authList3.auth" name="authList[2].auth">
+					<option value="" selected="selected">===선택해주세요===</option>
+					<option value="ROLE_USER">사용자</option>
+					<option value="ROLE_MEMBER">회원</option>
+					<option value="ROLE_ADMIN">관리자</option>
+				</select>
+		</tr>
+		
+	</table>
+	<div>
+		<button id="listBtn">LIST</button>
+		<button id="readBtn">READ</button>
+		<button id="registerBtn">REGISTER</button>
+		<button id="deleteBtn">DELETE</button>
+		<button id="modifyBtn">MODIFY</button>
+		<button id="resetBtn">RESET</button>
+	</div>
+</body>
+</html>

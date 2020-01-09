@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<script src="/js/jquery-3.4.1.js"></script>
+<script>
+	$(document).ready(function(){
+			
+		$("#registerBtn").on("click", function(){
+			// 이벤트 처리 로직
+			var userId = $("#userId");
+			var password = $("#userPw");
+						
+			var userIdVal = userId.val();
+			var passwordVal = password.val();
+			
+			var userObject = {
+				userId: userIdVal,
+				userPw: passwordVal
+			};
+			
+			$.ajax({
+				type: "POST",
+				url: "/users/login",
+				data: JSON.stringify(userObject),
+				contentType: "application/json; charset=UTF-8",
+				success: function(data) {
+					console.log(data);
+					
+					alert(JSON.stringify(data));
+				},
+				error: function(xhr, textStatus, error) {
+					alert("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
+				}
+			});
+			
+		});
+		
+	});
+</script>
+<body>
+	<h1>ajax Home.</h1>
+	<form>
+		userId:<input type="text" name="userId" value="cbcho" id="userId"><br>
+		password:<input type="password" name="userPw" value="0000" id="userPw"><br>
+	</form>
+	<div>
+		<button id="registerBtn">registerBtn</button>
+	</div>
+</body>
+</html>

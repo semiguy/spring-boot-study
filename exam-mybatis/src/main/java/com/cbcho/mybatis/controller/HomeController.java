@@ -25,4 +25,12 @@ public class HomeController {
 		
 		return "ajaxHome2";
 	}
+	
+	@RequestMapping(value = "/ajaxHome3", method = RequestMethod.GET)
+	public String ajaxHome3() throws Exception {
+		
+		log.info("ajaxHome3()...");
+		
+		return "ajaxHome3";
+	}
 }

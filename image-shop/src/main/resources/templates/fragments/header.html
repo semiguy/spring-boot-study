@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+	<div align="right" th:fragment="header">
+		<table>
+			<!-- 로그인을 하지 않은 경우 로그인 페이지로 이동할 수 있게 한다. -->
+			<tr sec:authorize="!isAuthenticated()">
+				<td width="80">
+					<a href="../user/register.html" th:href="@{/user/register}" th:text="#{header.joinMember}">회원가입</a>
+				</td>
+				<!-- 로그인을 메뉴에 추가한다. -->
+				<td width="80">
+					<a href="../auth/loginForm.html" th:href="@{/auth/login}" th:text="#{header.login}">로그인</a>
+				</td>
+			</tr>
+			<!-- 로그인을 거친 인증된 사용자인 경우 사용자명을 보여주고 로그아웃 페이지로 이동할 수 있게 한다. -->
+			<tr sec:authorize="isAuthenticated()">
+				<td width="180">
+					<span sec:authentication="principal.username">홍길동</span>님 
+					<a href="../auth/logoutForm.html" th:href="@{/auth/logout}" th:text="#{header.logout}">로그아웃</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
